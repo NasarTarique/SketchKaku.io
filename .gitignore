@@ -1,0 +1,9 @@
+*.pyc
+.env 
+node_modules/
+setup.sh
+staticfiles/
+media/
+.env_dev
+db.sqlite3
+
