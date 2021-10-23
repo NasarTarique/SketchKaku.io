@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+        django:
+                build: .
+                container_name: django-sketchkaku
+                volumes:
+                        - ./:/app
+                ports:
+                        - "8000:8000"
+                environment:
+                        SEC_KEY: "${SEC_KEY}"
+                depends_on: 
+                        - redis
+        redis:
+                img: "redis:alpine"

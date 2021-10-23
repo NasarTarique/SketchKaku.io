@@ -1,0 +1,4 @@
+./frontend/node_modules/
+setup.sh
+db.sqlite3
+.env
