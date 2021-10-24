@@ -1,5 +1,4 @@
 ./frontend/node_modules/
 ./frontend/src/
 setup.sh
-db.sqlite3
 .env
