@@ -1,0 +1,13 @@
+.nav-bar{
+		position:sticky;
+		background-color:#123;
+		height:60px;
+		width:100%;
+		padding-left:2rem;
+		font-family:'Ubuntu' ,sans-serif;
+}
+.nav-header{
+		color:white;
+		line-height:60px;
+		float:left;
+}

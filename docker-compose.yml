@@ -2,14 +2,12 @@ version: "3.9"
 services:
         django:
                 build: .
-                container_name: django-sketchkaku
-                volumes:
-                        - ./:/app
+                command: python3 manage.py runserver 0.0.0.0:8000
                 ports:
                         - "8000:8000"
+                volumes:
+                        - ./:/app
                 environment:
-                        SEC_KEY: "${SEC_KEY}"
-                depends_on: 
-                        - redis
+                        - SEC_KEY="${SEC_KEY}"
         redis:
-                img: "redis:alpine"
+                image: "redis:alpine"
