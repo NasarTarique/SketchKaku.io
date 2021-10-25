@@ -9,15 +9,15 @@ const Homepage: React.FC = () => {
   return (
     <div className="main-page">
       <div>
-        <input id="username" type="text" />
+        <input id="username" type="text" placeholder="Username" />
       </div>
-      <div>
+      <div className="create-link mplink">
 			  <Link to="/create">CREATE</Link>
       </div>
-      <div>
+      <div className="join-link mplink">
 			  <Link to="/join">JOIN</Link>
       </div>
-      <div>
+      <div className="lobby-link mplink">
 			  <Link to="/lobby">LOBBY</Link>
       </div>
     </div>
