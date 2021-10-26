@@ -19,15 +19,16 @@ class ChatroomCreateView(ListCreateAPIView):
     serializer_class = ChatroomsSerializer
     def create(self,request):
         print(request.data)
-        room_name = request.POST.get('room_name')
+        room_name = request.data.get('roomname')
+        print(f"albied :{room_name} ")
         room_id = room_name 
-        room_type = request.POST.get('room_type',False)
+        room_type = request.data.get('roomtype',False)
         obj = Chatrooms(room_id=room_id,room_name=room_name,public=room_type)
         obj.save()
         resp = {
-            'room_name':room_name,
-            'room_id':room_id,
-            'public':room_type
+            'roomname':room_name,
+            'roomid':room_id,
+            'roomtype':room_type
         }
         return Response(resp, status=status.HTTP_201_CREATED)
 

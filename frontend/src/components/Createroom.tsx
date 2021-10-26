@@ -1,7 +1,7 @@
 import "./styles/createroom.css";
 import { RootState } from "./store/store";
 import { connect, ConnectedProps } from "react-redux";
-import { getRoomDetail } from "./store/actions";
+import { getRoomDetail, createRoom } from "./store/actions";
 
 const Createroom = (props: Propsfromredux) => {
   return (
@@ -46,6 +46,10 @@ const Createroom = (props: Propsfromredux) => {
         <p
           onClick={(e) => {
             console.log(props.room);
+				  props.createRoom({
+						  roomname:props.room.roomname,
+						  roomtype:props.room.roomtype
+				  })
           }}
         >
           CREATE
@@ -65,9 +69,8 @@ const mapDispatch = {
     roomtype: boolean;
     roomid: string;
   }) => getRoomDetail(room),
-		/*  createRoom: (room: { roomname: string; roomid: string; roomtype: boolean }) =>
-	createRoom(room),*/
-};
+  createRoom: (room: { roomname: string;  roomtype: boolean }) =>
+    createRoom(room), };
 const connector = connect(mapState, mapDispatch);
 type Propsfromredux = ConnectedProps<typeof connector>;
 export default connector(Createroom);

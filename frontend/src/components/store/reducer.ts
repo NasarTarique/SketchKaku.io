@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { getuser, getRoomDetail } from "./actions";
+import { getuser, getRoomDetail,createRoom } from "./actions";
 
 const initialState = {
   user: "",
@@ -19,10 +19,10 @@ const reducer = createReducer(initialState, (builder) => {
           user: action.payload,
         })
     )
-//				.addCase(createRoom.fulfilled,(state,action)=>({
-//						...state,
-//						room:action.payload
-//				}))
+				.addCase(createRoom.fulfilled,(state,action)=>({
+						...state,
+						room:action.payload
+				}))
     .addCase(getRoomDetail, (state, action) => ({
       ...state,
       room: action.payload,
