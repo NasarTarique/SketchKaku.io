@@ -1,20 +1,32 @@
-import {PayloadAction} from '@reduxjs/toolkit';
-interface User{
-		name:string
-}
-const initialState:User = {
-		name:''
-}
-const reducer = (state=initialState,action:PayloadAction<string>) =>{
-		switch(action.type){
-				case 'username_change':
-						return (
-								{
-										...state,
-										name:action.payload
-								}
-						)
-		}
-}
+import { createReducer } from "@reduxjs/toolkit";
+import { getuser, getRoomDetail } from "./actions";
 
+const initialState = {
+  user: "",
+  room: {
+    roomid: "",
+    roomname: "",
+    roomtype: true,
+  },
+};
+const reducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(
+      getuser,
+      (state, action) =>
+        (state = {
+          ...state,
+          user: action.payload,
+        })
+    )
+//				.addCase(createRoom.fulfilled,(state,action)=>({
+//						...state,
+//						room:action.payload
+//				}))
+    .addCase(getRoomDetail, (state, action) => ({
+      ...state,
+      room: action.payload,
+    }))
+
+});
 export default reducer;

@@ -1,0 +1,28 @@
+.create-room-page{
+		border:1px solid #123;
+		position:absolute;
+		top:50%;
+		left:50%;
+		font-family:'Ubuntu',sans-serif;
+		transform:translate(-50%,-50%);
+		padding:3rem;
+}
+
+.room-type-input > *{
+		display:block;
+		padding-top:20px;
+}
+.create-room-button{
+		padding-top:2rem;
+}
+.create-room-button > p{
+		padding:1rem 2rem 1rem 2rem;
+		background-color:#123;
+		text-align:center;
+		color:white;
+		border-radius:5px;
+}
+.create-room-button > p:hover{
+		cursor:pointer;
+		background:linear-gradient(to left,#1DB700,#24E500,#39FF14);
+}
