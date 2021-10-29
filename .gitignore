@@ -2,6 +2,7 @@
 .env 
 node_modules/
 setup.sh
+todo.md
 staticfiles/
 media/
 .env_dev

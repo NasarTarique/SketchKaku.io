@@ -1,14 +1,20 @@
 import Nav from "./components/Nav";
 import Createroom from "./components/Createroom";
-import Homepage from './components/Homepage';
+import Homepage from "./components/Homepage";
 import Lobby from "./components/Lobby";
-import { store  } from "./components/store/store";
-import { Provider } from 'react-redux'
+import Room from "./components/Room";
+import { store, RootState } from "./components/store/store";
+import { Provider, connect, ConnectedProps } from "react-redux";
 import { Fragment } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import "./components/styles/App.css";
 
-export const App = () => {
+export const App = (props: Propsfromredux) => {
   return (
     <Provider store={store}>
       <Fragment>
@@ -19,11 +25,12 @@ export const App = () => {
               <Homepage />
             </Route>
             <Route path="/create">
-              <Createroom />
+                <Createroom />
             </Route>
             <Route path="/lobby">
               <Lobby />
             </Route>
+            <Route path="/room/:rid" children={<Room />} />
           </Switch>
         </Router>
       </Fragment>
@@ -31,4 +38,9 @@ export const App = () => {
   );
 };
 
-export default App;
+const mapState = (state: RootState) => ({
+  roomid: state.room.roomid,
+});
+const connector = connect(mapState);
+type Propsfromredux = ConnectedProps<typeof connector>;
+export default connector(App);

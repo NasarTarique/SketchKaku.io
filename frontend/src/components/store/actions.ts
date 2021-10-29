@@ -2,6 +2,7 @@ import { createAction , createAsyncThunk} from '@reduxjs/toolkit';
 
 export const getuser = createAction<string>('getuser');
 export const getRoomDetail = createAction<{roomname:string,roomtype:boolean,roomid:string}>('getroomdetail');
+export const joinRoom = createAction<{roomid:string,roomname:string,roomtype:boolean}>('joinRoom');
 export const createRoom = createAsyncThunk('createServerRoom',
 		async(room:{roomname:string,roomtype:boolean} ,thunkAPI) =>{
 				const response = await fetch('/api/chatroomcreate/',{
