@@ -2,12 +2,12 @@ version: "3.9"
 services:
         django:
                 build: .
-                command: python3 manage.py runserver 0.0.0.0:8000
-                ports:
-                        - "8000:8000"
+                environment:
+                        SEC_KEY: "${SEC_KEY}"
                 volumes:
                         - ./:/app
-                environment:
-                        - SEC_KEY="${SEC_KEY}"
+                command: python3 manage.py runserver  0.0.0.0:8000
+                ports:
+                        - "8000:8000"
         redis:
                 image: "redis:alpine"
