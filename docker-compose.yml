@@ -6,7 +6,7 @@ services:
                         SEC_KEY: "${SEC_KEY}"
                 volumes:
                         - ./:/app
-                command: python3 manage.py runserver  0.0.0.0:8000
+                command: gunicorn SketchKaku.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
                 ports:
                         - "8000:8000"
         redis:

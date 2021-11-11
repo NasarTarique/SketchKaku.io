@@ -1,13 +1,18 @@
 .nav-bar{
 		position:sticky;
-		background-color:#123;
-		height:60px;
+		background:white;
+		height:80px;
 		width:100%;
 		padding-left:2rem;
 		font-family:'Ubuntu' ,sans-serif;
 }
 .nav-header{
-		color:white;
-		line-height:60px;
+		background-color:white;
+		justify-content:center;
+		line-height:80px;
 		float:left;
+		color:#FEE140;
+}
+.nav-header>span{
+		color:#FA709A;
 }

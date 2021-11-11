@@ -1,4 +1,6 @@
 import json
+import string
+import random
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
@@ -24,8 +26,9 @@ class ChatConsumer(WebsocketConsumer):
 
     # receive message from websocket
     def receive(self, text_data):
-        text_data_json = json.load(text_data)
+        text_data_json = json.loads(text_data)
         message = text_data_json["message"]
+        print("Ariletia : websocket to group "+message)
         async_to_sync(self.channel_layer.group_send)(
             self.group_room_name,
             {
@@ -37,6 +40,7 @@ class ChatConsumer(WebsocketConsumer):
     # receive message from room_group
     def chat_message(self, event):
         message  = event["message"]
+        print("Ariletia :  group to websocket"+message)
         self.send(text_data=json.dumps({
             "message":message
         }))

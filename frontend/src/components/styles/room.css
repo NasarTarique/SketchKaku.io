@@ -1,0 +1,23 @@
+.room-page {
+        width:100%;
+		display:flex;
+}
+.user-container{
+		width:200px;
+}
+.room-canvas{
+		border:2px solid #FA709A;
+		flex-grow:3;
+}
+.room-chat{
+		border:2px solid #FA709A;
+		padding:2rem;
+		display:flex;
+		flex-direction:column;
+		flex-grow:1;
+
+}
+.room-user{
+		border:2px solid #FA709A;
+		flex-grow:1
+}

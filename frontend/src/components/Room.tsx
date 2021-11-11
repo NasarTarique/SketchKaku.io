@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { RootState } from "./store/store";
 import { connect, ConnectedProps } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
@@ -10,13 +10,32 @@ type RoomidParam = {
 };
 
 const Room = (props: Propsfromredux) => {
+  const [msg, getMsg] = useState("");
+  const wssocket = useRef<WebSocket>();
+  const chatRef = useRef<HTMLTextAreaElement>(null);
   let { rid } = useParams<RoomidParam>();
   let history = useHistory();
-  const [ws, setWebsocket] = useState<WebSocket | null>(null);
-  const connect = () => {
-    setWebsocket(
-			new WebSocket("ws://localhost:8000/ws/room/" + props.room.roomid + "/")
+
+  const addMessage = (msg: string): void => {
+    if (chatRef.current != undefined) {
+      chatRef.current.value += ">>> " + msg + "\n";
+    }
+  };
+  const connect = (): void => {
+    if (wssocket.current != undefined) return;
+    const sockt = new WebSocket(
+      "ws://localhost:8000/ws/room/" + props.room.roomid + "/"
     );
+    sockt.onopen = (e) => {
+      console.log("connection open");
+      wssocket.current = sockt;
+      wssocket.current.onmessage = (e) => {
+        console.log("message received");
+        let data = JSON.parse(e.data);
+        addMessage(data.message);
+        console.log(data.message);
+      };
+    };
   };
 
   useEffect(() => {
@@ -46,10 +65,45 @@ const Room = (props: Propsfromredux) => {
   }, [props.room.roomid]);
   return (
     <div className="room-page">
-      <h1 className="room-name">{rid}</h1>
-      <textarea id="chatmessage" name="wschat" cols={30} rows={10}></textarea>
-      <input type="text" />
-      <input type="button" value="send" />
+			<div className="room-user">
+					<div className="user-container">
+					</div>
+			</div>
+	  <div className="room-canvas">
+			  <canvas>
+			  </canvas>
+	  </div>
+
+      <div className="room-chat">
+        <textarea
+          id="chatmessage"
+          name="wschat"
+          cols={30}
+          rows={10}
+          readOnly
+          ref={chatRef}
+        ></textarea>
+        <input
+          type="text"
+          value={msg}
+          onChange={(e) => getMsg(e.target.value)}
+        />
+        <input
+          type="button"
+          value="send"
+          onClick={(e) => {
+            console.log("clicked");
+            if (wssocket.current != undefined) {
+              wssocket.current.send(
+                JSON.stringify({
+                  message: msg,
+                })
+              );
+              getMsg("");
+            }
+          }}
+        />
+      </div>
     </div>
   );
 };

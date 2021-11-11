@@ -4,7 +4,7 @@ const Nav:React.FC = () =>{
 		return (
 				<div className="nav-bar">
 						<h1 className="nav-header">
-								SketchKaku
+								Sketch<span>Kaku</span>
 						</h1>
 				</div>
 		)
