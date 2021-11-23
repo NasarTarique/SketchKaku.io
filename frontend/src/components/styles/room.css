@@ -5,6 +5,7 @@
 .user-container{
 		width:200px;
 }
+
 .room-canvas{
 		border:2px solid #FA709A;
 		flex-grow:3;
@@ -20,4 +21,11 @@
 .room-user{
 		border:2px solid #FA709A;
 		flex-grow:1
+}
+
+.strokecolor-buttons{
+		display:flex;
+}
+canvas{
+		border:1px solid #000000;
 }

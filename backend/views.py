@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView
@@ -6,12 +5,11 @@ from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import ChatroomsSerializer
 from .models import Chatrooms
-import json
 
 # Create your views here.
 
 def index(request):
-    return JsonResponse({"foo":"hello"})
+    return JsonResponse({"test":"test"})
 
 # checking if room is on  
 class RoomAliveView(APIView):
@@ -43,7 +41,3 @@ class ChatroomCreateView(ListCreateAPIView):
             'roomtype':room_type
         }
         return Response(resp, status=status.HTTP_201_CREATED)
-
-
-         
-

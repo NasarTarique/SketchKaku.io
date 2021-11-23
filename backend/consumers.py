@@ -28,19 +28,29 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
-        print("Ariletia : websocket to group "+message)
+        drawpath = text_data_json["drawpath"]
+        backgroundfill = text_data_json["backgroundfill"]
+        strokecolor = text_data_json["strokecolor"]
         async_to_sync(self.channel_layer.group_send)(
             self.group_room_name,
             {
                 "type":"chat_message",
-                "message":message
+                "message":message,
+                "drawpath":drawpath,
+                "backgroundfill":backgroundfill,
+                "strokecolor":strokecolor
             }
         )
 
     # receive message from room_group
     def chat_message(self, event):
         message  = event["message"]
-        print("Ariletia :  group to websocket"+message)
+        drawpath = event["drawpath"]
+        backgroundfill = event["backgroundfill"]
+        strokecolor = event["strokecolor"]
         self.send(text_data=json.dumps({
-            "message":message
+            "message":message,
+            "drawpath":drawpath,
+            "backgroundfill":backgroundfill,
+            "strokecolor":strokecolor
         }))

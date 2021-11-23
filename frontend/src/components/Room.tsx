@@ -3,6 +3,7 @@ import { RootState } from "./store/store";
 import { connect, ConnectedProps } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { joinRoom } from "./store/actions";
+import Canvas from "./Canvas"
 import "./styles/room.css";
 
 type RoomidParam = {
@@ -10,8 +11,11 @@ type RoomidParam = {
 };
 
 const Room = (props: Propsfromredux) => {
+
+  // States and References
   const [msg, getMsg] = useState("");
   const wssocket = useRef<WebSocket>();
+  const [connected, setConnnected] = useState(false)
   const chatRef = useRef<HTMLTextAreaElement>(null);
   let { rid } = useParams<RoomidParam>();
   let history = useHistory();
@@ -21,14 +25,18 @@ const Room = (props: Propsfromredux) => {
       chatRef.current.value += ">>> " + msg + "\n";
     }
   };
+
   const connect = (): void => {
     if (wssocket.current != undefined) return;
     const sockt = new WebSocket(
-      "ws://localhost:8000/ws/room/" + props.room.roomid + "/"
+      "ws://localhost:8080/ws/room/" + props.room.roomid + "/"
     );
+		  console.log("connecting");
+		  console.log(sockt);
     sockt.onopen = (e) => {
       console.log("connection open");
-      wssocket.current = sockt;
+      wssocket.current = sockt; 
+      setConnnected(true)
       wssocket.current.onmessage = (e) => {
         console.log("message received");
         let data = JSON.parse(e.data);
@@ -38,6 +46,11 @@ const Room = (props: Propsfromredux) => {
     };
   };
 
+		const showCanvas = ()=>{
+				if(connected){
+							  return <Canvas ws={wssocket.current}/>
+				}
+		}
   useEffect(() => {
     if (props.room.roomid.length === 0) {
       fetch("/api/roomalive/" + rid + "/")
@@ -63,16 +76,15 @@ const Room = (props: Propsfromredux) => {
   useEffect(() => {
     if (props.room.roomid.length === 0) history.push("/create");
   }, [props.room.roomid]);
+
   return (
     <div className="room-page">
-			<div className="room-user">
-					<div className="user-container">
-					</div>
-			</div>
-	  <div className="room-canvas">
-			  <canvas>
-			  </canvas>
-	  </div>
+      <div className="room-user">
+        <div className="user-container"></div>
+      </div>
+      <div className="room-canvas">
+			  {showCanvas()}
+      </div>
 
       <div className="room-chat">
         <textarea
@@ -96,7 +108,10 @@ const Room = (props: Propsfromredux) => {
             if (wssocket.current != undefined) {
               wssocket.current.send(
                 JSON.stringify({
-                  message: msg,
+                  'message': msg,
+				  'drawpath':[],
+				  'backgroundfill':"#ffffff",
+				  'strokecolor':"#000000"
                 })
               );
               getMsg("");
@@ -104,6 +119,7 @@ const Room = (props: Propsfromredux) => {
           }}
         />
       </div>
+
     </div>
   );
 };
